@@ -82,8 +82,7 @@ const HomePage = () => {
         </div>
         
         <UrlForm  handleSubmit={handleSubmit} setFocused={setFocused} focused={focused} setLoading={setLoading} loading={loading} setUrl={setUrl} url={url} resetForm={resetForm} />
-        { isAuthenticated && <input type='text' className='bg-red-400 w-full mt-2.5 mb-2.5 ' 
-        />}
+       
 
         {error && (
           <div className="mt-6 p-4 bg-red-50/80 backdrop-blur-sm border border-red-200 text-red-700 rounded-xl animate-in slide-in-from-top-4 duration-500 hover:bg-red-50 transition-colors">
