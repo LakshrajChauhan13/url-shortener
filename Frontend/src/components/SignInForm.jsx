@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { signInUser } from '../api/user.api';
+import { useDispatch, useSelector } from 'react-redux';
+import { login } from '../store/slice/authSlice';
+import { useNavigate } from '@tanstack/react-router';
+import { useQueryClient } from '@tanstack/react-query';
 
 const SignInForm = ({ setIsSignUp }) => {
   const [formData, setFormData] = useState({
@@ -11,6 +15,10 @@ const SignInForm = ({ setIsSignUp }) => {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [focused, setFocused] = useState('');
+  const navigate =  useNavigate()
+  const auth = useSelector((state) => state.auth)  // to read the store's value
+  const dispatch = useDispatch() // to dispatch an event to the reducer so that it can update the store's value
+  const queryClient = useQueryClient()
 
   const handleChange = (e) => {
     setFormData({
@@ -24,15 +32,20 @@ const SignInForm = ({ setIsSignUp }) => {
     e.preventDefault();
     setLoading(true);
     setError('');
-
+    
     try {
       const response = await signInUser(formData.email, formData.password);
-      console.log(response);
+
+      dispatch(login(response.data.userSafe))  
+      queryClient.setQueryData(['currentUser'], response.data.userSafe);  // updating react query cache also with new data
+
       setSuccess('Signed in successfully!');
+      navigate({ to : '/dashboard' })
+
       // Redirect to dashboard or home page
-      setTimeout(() => {
-        window.location.href = '/dashboard';
-      }, 1500);
+      // setTimeout(() => {
+      //   window.location.href = '/dashboard';
+      // }, 1500);
     } catch (err) {
       setError(err.message || 'Failed to sign in');
     } finally {
@@ -73,7 +86,7 @@ const SignInForm = ({ setIsSignUp }) => {
         <input
           type="password"
           name="password"
-          value={formData.password}
+          value={formData.password}       
           onChange={handleChange}
           onFocus={() => setFocused('password')}
           onBlur={() => setFocused('')}

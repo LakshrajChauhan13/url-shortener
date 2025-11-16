@@ -5,8 +5,9 @@ const { urlRouter } = require('./src/routes/shortUrl.routes')
 const { redirectFromShortUrl } = require('./src/controllers/shortUrl.controller')
 const { errorHandler } = require('./src/utils/errorHandler')
 const cors = require('cors')
-const { userRouter } = require('./src/routes/userAuth.routes')
+const { userAuthRouter } = require('./src/routes/userAuth.routes')
 const cookieParser = require('cookie-parser')
+const { userRouter } = require('./src/routes/user.routes')
 const app = express()
 
 app.use(express.json())
@@ -17,8 +18,9 @@ app.use(cors({
     credentials: true,
 }))
 
-app.use('/api/auth' , userRouter)
+app.use('/api/auth' , userAuthRouter)
 app.use('/api/create' , urlRouter)  // router
+app.use('/api/user' , userRouter)
 app.get('/:id' , redirectFromShortUrl) 
 
 

@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
 
+
+
 const UrlSchema = new mongoose.Schema({
   fullUrl: { type: String, require: true },
   shortUrl: { type: String, require: true, unique: true, index: true },

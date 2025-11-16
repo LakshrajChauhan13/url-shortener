@@ -1,8 +1,14 @@
 import axios from 'axios';
 import { axiosInstance } from '../utils/axiosInstance';
+import { useSelector } from 'react-redux';
 
-export async function createShortUrlApi(url){
-    const response = await axiosInstance.post('/api/create', {url})
+export async function createShortUrlApi(url , isAuthenticated , customUrl){
+
+    const endPoint = isAuthenticated ? "/api/create/user" : "/api/create"
+    
+    const response = await axiosInstance.post(endPoint, {url , customUrl} , {
+        withCredentials : isAuthenticated
+    })
     console.log(response);
     
     return {
@@ -10,14 +16,4 @@ export async function createShortUrlApi(url){
         status : response.status ,
     }
 }
-
-// export async function createCustomUrlApi(url){
-//     const response = await axiosInstance.post('/api/create/user/custom-url', {url , customUrl : "demoo"})
-//     console.log(response);
-    
-//     return {
-//         shortUrl : response.data.shortUrl ,
-//         status : response.status ,
-//     }
-// }
 

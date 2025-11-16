@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import UrlForm from '../components/UrlForm.jsx';
+import UrlForm from     '../components/UrlForm.jsx';
 import axios from 'axios';
 import { createShortUrlApi } from '../api/shortUrl.api.js';
+import { useSelector } from 'react-redux';
 
 
 const HomePage = () => {
@@ -12,7 +13,7 @@ const HomePage = () => {
   const [copied, setCopied] = useState(false);
   const [focused, setFocused] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
-
+  const { isAuthenticated } = useSelector(state => state.auth)
   useEffect(() => {
     setIsVisible(true);
   }, []);
@@ -20,16 +21,15 @@ const HomePage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!url) return;
-
     setLoading(true);
     setError('');
     
     try {
-      const {shortUrl , status} = await createShortUrlApi(url)  // axios call
+      const {shortUrl , status} = await createShortUrlApi(url , isAuthenticated )  // axios call
     
       if (status === 200) {
         setShortUrl(`http://localhost:3000/${shortUrl}`)
-      } else {
+      } else { 
         setError('Failed to create short URL')
       }
     } catch (err) {
@@ -57,7 +57,7 @@ const HomePage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-slate-50 to-slate-100 flex items-center justify-center p-4 overflow-hidden">
+    <div className="h-screen bg-linear-to-br from-slate-50 to-slate-100 flex items-center justify-center p-4 overflow-hidden">
       {/* Enhanced background decoration */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-1/4 right-1/4 w-64 h-64 bg-blue-50 rounded-full opacity-40 blur-3xl animate-pulse"></div>
@@ -82,6 +82,8 @@ const HomePage = () => {
         </div>
         
         <UrlForm  handleSubmit={handleSubmit} setFocused={setFocused} focused={focused} setLoading={setLoading} loading={loading} setUrl={setUrl} url={url} resetForm={resetForm} />
+        { isAuthenticated && <input type='text' className='bg-red-400 w-full mt-2.5 mb-2.5 ' 
+        />}
 
         {error && (
           <div className="mt-6 p-4 bg-red-50/80 backdrop-blur-sm border border-red-200 text-red-700 rounded-xl animate-in slide-in-from-top-4 duration-500 hover:bg-red-50 transition-colors">
@@ -138,6 +140,9 @@ const HomePage = () => {
           </div>
         )}
 
+
+
+
         {/* Enhanced Footer */}
         <div className="mt-8 text-center">
           <p className="text-slate-400 text-xs hover:text-slate-500 transition-colors duration-200 cursor-default">
@@ -150,3 +155,6 @@ const HomePage = () => {
 }
 
 export default HomePage
+
+
+// update dashboard page , where we user can create short urls and cutom urls if want ,see his name at the place of dashboard in the nav bar, ofcouse if user is authenticated , user will see his name instead of the dashboard text and onclick to the bitly logo will back to the dashboard page instead of the homepage of course

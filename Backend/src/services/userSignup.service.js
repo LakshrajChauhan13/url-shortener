@@ -1,8 +1,7 @@
 const { JWT_SECRET_USER } = require("../../config/config")
-const { userSave, findUser } = require("../dao/userAuth")
+const { userSave } = require("../dao/user.dao")
 const { UnauthorizedError } = require("../utils/errorHandler")
 const bcrypt = require('bcrypt')
-const jwt = require('jsonwebtoken')
 const { jwtTokenSign } = require("../utils/helper")
 
 async function userSigningUpService(name, email, password){
@@ -13,13 +12,14 @@ async function userSigningUpService(name, email, password){
 }
 
 
-async function userSigningInService(response , password){
-    const isPasswordMatch = await bcrypt.compare(password , response.password)
+async function userSigningInService(user , password){
+    console.log(user)    
+    const isPasswordMatch = await bcrypt.compare(password , user.password)
     if(!isPasswordMatch){
       throw new UnauthorizedError(" Invalid credentials ")
     }
     if(isPasswordMatch){
-      const token = await jwtTokenSign({id : response._id})
+      const token = await jwtTokenSign({id : user._id})      
       return token
     }
   }
