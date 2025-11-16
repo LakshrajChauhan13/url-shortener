@@ -28,7 +28,7 @@ const HomePage = () => {
       const {shortUrl , status} = await createShortUrlApi(url , isAuthenticated )  // axios call
     
       if (status === 200) {
-        setShortUrl(`http://localhost:3000/${shortUrl}`)
+        setShortUrl(`${import.meta.env.VITE_API_URL || 'http://localhost:3000'}/${shortUrl}`)
       } else { 
         setError('Failed to create short URL')
       }

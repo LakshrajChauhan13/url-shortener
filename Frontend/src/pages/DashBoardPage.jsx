@@ -27,7 +27,7 @@ const DashBoardPage = () => {
   const urls = urlsData?.urls || [];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br  from-slate-50 via-slate-100 to-slate-50 py-8 px-4">
+    <div className="min-h-screen bg-linear-to-br  from-slate-50 via-slate-100 to-slate-50 py-8 px-4">
       <div className="max-w-7xl mx-auto">
         
         {/* Welcome Section */}

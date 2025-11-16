@@ -117,7 +117,7 @@ const DashboardUrlForm = ({ onSuccess }) => {
                 </label>
                 <div className="flex items-center border-2 border-slate-200 rounded-xl overflow-hidden focus-within:ring-2 focus-within:ring-slate-900 focus-within:border-transparent transition-all">
                   <span className="px-4 py-3 bg-slate-100 text-slate-600 text-sm font-mono border-r border-slate-200">
-                    localhost:3000/
+                    {import.meta.env.VITE_API_URL || 'http://localhost:3000'}/
                   </span>
                   <input
                     type="text"
