@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 
 const UrlCard = ({ urlData, index }) => {
   const [copied, setCopied] = useState(false);
+  const backendUrl = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
   const copyToClipboard = (text) => {
     navigator.clipboard.writeText(text);
@@ -27,7 +28,7 @@ const UrlCard = ({ urlData, index }) => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.05 }}
-      className="border-2 border-slate-200 rounded-xl p-5 hover:shadow-lg hover:border-slate-300 transition-all duration-300 bg-gradient-to-br from-white to-slate-50"
+      className="border-2 border-slate-200 rounded-xl p-5 hover:shadow-lg hover:border-slate-300 transition-all duration-300 bg-linear-to-br from-white to-slate-50"
     >
       <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
         
@@ -56,15 +57,15 @@ const UrlCard = ({ urlData, index }) => {
             </p>
             <div className="flex items-center space-x-2">
               <a
-                href={`http://localhost:3000/${urlData.shortUrl}`}
+                href={`${backendUrl}/${urlData.shortUrl}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-sm text-blue-600 hover:text-blue-800 font-mono font-semibold hover:underline"
               >
-                localhost:3000/{urlData.shortUrl}
+                {backendUrl.replace(/^https?:\/\//, '')}/{urlData.shortUrl}
               </a>
               <button
-                onClick={() => copyToClipboard(`http://localhost:3000/${urlData.shortUrl}`)}
+                onClick={() => copyToClipboard(`${backendUrl}/${urlData.shortUrl}`)}
                 className="p-1.5 hover:bg-blue-50 rounded-lg transition-colors group"
                 title="Copy to clipboard"
               >

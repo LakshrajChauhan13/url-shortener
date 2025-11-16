@@ -14,7 +14,7 @@ app.use(express.json())
 app.use(express.urlencoded({extended : true}))
 app.use(cookieParser())
 app.use(cors({
-    origin : "http://localhost:5173" ,
+    origin : process.env.FRONTEND_URL || "http://localhost:5173" ,
     credentials: true,
 }))
 
@@ -30,9 +30,9 @@ app.use(errorHandler)
 async function main(){
     try {
         await connectDB()
-        app.listen(3000)
+        app.listen(process.env.PORT || 3000)
         console.log("Successfully connected to DB"); 
-        console.log("Server is running on the port 3000");
+        console.log("Server is running on the port " + (process.env.PORT || 3000));
     }
     catch(e){
         console.error(" failed in connecting to DB...");
