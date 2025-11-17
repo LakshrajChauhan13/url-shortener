@@ -139,14 +139,14 @@ const SignInForm = ({ setIsSignUp }) => {
       </button>
 
       {/* Forgot Password */}
-      <div className="text-center">
+      {/* <div className="text-center">
         <button
           type="button"
           className="text-slate-600 text-sm hover:text-slate-800 transition-colors duration-200"
         >
           Forgot your password?
         </button>
-      </div>
+      </div> */}
 
       {/* Switch to Sign Up */}
       <div className="text-center pt-4 border-t border-slate-200">
