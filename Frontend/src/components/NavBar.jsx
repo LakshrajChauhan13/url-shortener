@@ -42,7 +42,7 @@ const Navbar = () => {
               </svg>
             </div>
             <span className="text-xl font-bold text-slate-900 group-hover:text-slate-700 transition-colors">
-              Linkit
+              Oorly
             </span>
           </Link>
 
