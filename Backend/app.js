@@ -18,6 +18,17 @@ app.use(cors({
     credentials: true,
 }))
 
+// Redirect root domain to frontend app.oorly.in
+app.get('/', (req, res) => {
+  const host = req.get('host');
+  
+  if (host === 'oorly.in' || host === 'www.oorly.in') {
+    return res.redirect(301, 'https://app.oorly.in');
+  }
+  
+  res.send('URL Shortener API - Visit https://app.oorly.in');
+});
+
 app.use('/api/auth' , userAuthRouter)
 app.use('/api/create' , urlRouter)  // router
 app.use('/api/user' , userRouter)
