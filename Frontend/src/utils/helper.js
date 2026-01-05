@@ -17,13 +17,24 @@ export const checkAuth = async ({ context }) => {
         }
 
         store.dispatch(login(user));
+        localStorage.setItem("isAuthenticated", "true")
 
     } catch (error) {
+        localStorage.setItem("isAuthenticated", "false")
         // If it's already a redirect, re-throw it
         if (error?.href) {
             throw error;
         }
         // Otherwise redirect to auth
         throw redirect({ to: "/auth" });
+    }
+}
+
+export const ifAuthenticated = () => {
+    const value = localStorage.getItem("isAuthenticated");
+    console.log(value)
+
+    if(value === "true"){
+        throw redirect({ to: "/dashBoard"})
     }
 }
