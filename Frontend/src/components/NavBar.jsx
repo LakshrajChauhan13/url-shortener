@@ -22,6 +22,7 @@ const Navbar = () => {
    const handleLogOut = () => {
       signOutUser() ;
       dispatch(logout()) ;
+      localStorage.setItem("isAuthenticated", "false")
       queryClient.removeQueries({ queryKey: ['currentUser'] });
       navigate({ to : "/auth"}) ;
    }
@@ -36,12 +37,12 @@ const Navbar = () => {
         <div className="flex justify-between items-center h-16">
           {/* Left side - App Name/Logo */}
           <Link to={ isAuthenticated ? "/dashboard" : "/"} className="flex items-center space-x-2 group">
-            <div className="w-10 h-10 bg-linear-to-br from-slate-800 to-slate-900 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-md">
+            <div className="w-10 h-10 bg-linear-to-br from-slate-800 to-slate-900 rounded-xl flex items-center justify-center  transition-transform duration-300 shadow-md">
               <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
               </svg>
             </div>
-            <span className="text-xl font-bold text-slate-900 group-hover:text-slate-700 transition-colors">
+            <span className="text-2xl font-semibold transition-all duration-50 group-hover:font-extrabold  group-hover:scale-100  text-slate-900  ">
               Oorly
             </span>
           </Link>
