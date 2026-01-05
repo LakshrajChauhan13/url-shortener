@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { signOutUser } from '../api/user.api';
 import { logout } from '../store/slice/authSlice';
 import { useQueryClient } from '@tanstack/react-query';
+import Logo from '../../Logo';
 
 const Navbar = () => {
   const router = useRouter();
@@ -33,14 +34,12 @@ const Navbar = () => {
       animate={{ y: 0 }}
       className="bg-white/80 backdrop-blur-xl border-b border-slate-200/50 sticky top-0 z-50 shadow-sm"
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 ">
         <div className="flex justify-between items-center h-16">
           {/* Left side - App Name/Logo */}
           <Link to={ isAuthenticated ? "/dashboard" : "/"} className="flex items-center space-x-2 group">
             <div className="w-10 h-10 bg-linear-to-br from-slate-800 to-slate-900 rounded-xl flex items-center justify-center  transition-transform duration-300 shadow-md">
-              <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
-              </svg>
+              <Logo />
             </div>
             <span className="text-2xl font-semibold transition-all duration-50 group-hover:font-extrabold  group-hover:scale-100  text-slate-900  ">
               Oorly
