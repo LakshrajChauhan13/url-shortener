@@ -1,54 +1,38 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { signUpUser } from '../api/user.api';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod'
+import { safeSignUpSchema } from '../zod/zod.user';
+import { useMutation } from '@tanstack/react-query';
 
 const SignUpForm = ({ setIsSignUp }) => {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    password: '',
-    confirmPassword: ''
-  });
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  
+  const [serverError, setServerError] = useState('');
   const [success, setSuccess] = useState('');
   const [focused, setFocused] = useState('');
 
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
-    setError('');
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    
-    if (formData.password !== formData.confirmPassword) {
-      setError('Passwords do not match');
-      return;
-    }
-
-    if (formData.password.length < 6) {
-      setError('Password must be at least 6 characters');
-      return;
-    }
-
-    setLoading(true);
-    setError('');
-
-    try {
-      const response = await signUpUser(formData.name, formData.email, formData.password);
-      setSuccess('Account created successfully! Please sign in.');
+  const signUpMutation = useMutation({
+    mutationFn: (data) => signUpUser(data.name, data.email, data.password),
+    onSuccess: (data) => {
+      setSuccess('Account created successfully! Please sign in.')
       setTimeout(() => {
         setIsSignUp(false);
       }, 2000);
-    } catch (err) {
-      setError(err.message || 'Failed to create account');
-    } finally {
-      setLoading(false);
+      console.log(data)
+    },
+    onError: (error) => {
+      setServerError(error)
     }
+
+  })
+
+  const { register, handleSubmit, formState: { errors } } = useForm({
+    resolver: zodResolver(safeSignUpSchema)
+  })
+
+  const submitHandler = async (data) => {
+    signUpMutation.mutate(data)
   };
 
   return (
@@ -57,7 +41,7 @@ const SignUpForm = ({ setIsSignUp }) => {
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: -20 }}
       transition={{ duration: 0.3 }}
-      onSubmit={handleSubmit}
+      onSubmit={handleSubmit(submitHandler)}
       className="space-y-6"
     >
       {/* Name Field */}
@@ -65,11 +49,10 @@ const SignUpForm = ({ setIsSignUp }) => {
         <input
           type="text"
           name="name"
-          value={formData.name}
-          onChange={handleChange}
+          {...register("name")}
           onFocus={() => setFocused('name')}
           onBlur={() => setFocused('')}
-          placeholder="Full Name"
+          placeholder="Username"
           required
           className={`w-full px-4 py-3 bg-slate-50/80 backdrop-blur-sm border-2 rounded-xl text-slate-900 placeholder-slate-400 outline-none transition-all duration-300 ${
             focused === 'name' 
@@ -77,6 +60,7 @@ const SignUpForm = ({ setIsSignUp }) => {
               : 'border-slate-200 hover:border-slate-300'
           }`}
         />
+        {errors.name && <span className=' text-red-500 font-semibold text-sm tracking-wide'> {errors.name.message} </span>}
       </div>
 
       {/* Email Field */}
@@ -84,8 +68,7 @@ const SignUpForm = ({ setIsSignUp }) => {
         <input
           type="email"
           name="email"
-          value={formData.email}
-          onChange={handleChange}
+          {...register("email")}
           onFocus={() => setFocused('email')}
           onBlur={() => setFocused('')}
           placeholder="Email Address"
@@ -96,6 +79,7 @@ const SignUpForm = ({ setIsSignUp }) => {
               : 'border-slate-200 hover:border-slate-300'
           }`}
         />
+        {errors.email && <span className=' text-red-500 font-semibold text-sm tracking-wide'> {errors.email.message} </span>}
       </div>
 
       {/* Password Field */}
@@ -103,8 +87,7 @@ const SignUpForm = ({ setIsSignUp }) => {
         <input
           type="password"
           name="password"
-          value={formData.password}
-          onChange={handleChange}
+          {...register("password")}
           onFocus={() => setFocused('password')}
           onBlur={() => setFocused('')}
           placeholder="Password"
@@ -115,6 +98,7 @@ const SignUpForm = ({ setIsSignUp }) => {
               : 'border-slate-200 hover:border-slate-300'
           }`}
         />
+        {errors.password && <span className=' text-red-500 font-semibold text-sm tracking-wide'> {errors.password.message} </span>}
       </div>
 
       {/* Confirm Password Field */}
@@ -122,8 +106,7 @@ const SignUpForm = ({ setIsSignUp }) => {
         <input
           type="password"
           name="confirmPassword"
-          value={formData.confirmPassword}
-          onChange={handleChange}
+          {...register("confirmPassword")}
           onFocus={() => setFocused('confirmPassword')}
           onBlur={() => setFocused('')}
           placeholder="Confirm Password"
@@ -134,10 +117,11 @@ const SignUpForm = ({ setIsSignUp }) => {
               : 'border-slate-200 hover:border-slate-300'
           }`}
         />
+        {errors.confirmPassword && <span className=' text-red-500 font-semibold text-sm tracking-wide'> {errors.confirmPassword.message} </span> }
       </div>
 
       {/* Error Message */}
-      {error && (
+      {serverError && (
         <motion.div
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -161,10 +145,10 @@ const SignUpForm = ({ setIsSignUp }) => {
       {/* Submit Button */}
       <button
         type="submit"
-        disabled={loading}
+        disabled={signUpMutation.isPending}
         className="w-full bg-linear-to-r from-slate-800 to-slate-900 hover:from-slate-700 hover:to-slate-800 disabled:from-slate-400 disabled:to-slate-500 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300 transform hover:scale-[1.02] hover:-translate-y-0.5 active:scale-[0.98] disabled:scale-100 disabled:translate-y-0 shadow-lg hover:shadow-xl"
       >
-        {loading ? (
+        {signUpMutation.isPending ? (
           <div className="flex items-center justify-center space-x-2">
             <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
             <span>Creating Account...</span>
