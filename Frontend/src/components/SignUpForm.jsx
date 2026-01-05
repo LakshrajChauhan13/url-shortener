@@ -22,7 +22,8 @@ const SignUpForm = ({ setIsSignUp }) => {
       console.log(data)
     },
     onError: (error) => {
-      setServerError(error)
+      setServerError(error.message)
+      console.log(error.message)
     }
 
   })
@@ -127,7 +128,7 @@ const SignUpForm = ({ setIsSignUp }) => {
           animate={{ opacity: 1, y: 0 }}
           className="p-3 bg-red-50/80 backdrop-blur-sm border border-red-200 text-red-700 rounded-xl text-sm"
         >
-          {error}
+          {serverError}
         </motion.div>
       )}
 

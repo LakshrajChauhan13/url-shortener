@@ -38,7 +38,7 @@ const SignInForm = ({ setIsSignUp }) => {
       reset()
     },
     onError: (error) => {
-      console.log(error.message); 
+      console.log(error); 
       setServerError(error.message)
     }
   })
