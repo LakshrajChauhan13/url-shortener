@@ -3,10 +3,20 @@ const { findUser, findUserById } = require('../dao/user.dao.js');
 const { userSigningInService, userSigningUpService } = require('../services/userSignup.service.js');
 const { wrapAsync } = require('../utils/tryCatchWrapper.js');
 const { NotFoundError } = require('../utils/errorHandler.js');
+const z =  require('zod');
+const { safeSignUpSchema, safeSignInSchema } = require('../zod/zod.user.js');
 
 
 const signUpUser = wrapAsync( async(req , res) => {
-    const { name , email , password } = req.body;    
+    const parsedBody = safeSignUpSchema.safeParse(req.body)
+    if(!parsedBody.success){
+        return res.status(400).json({
+            message: "Invalid format",
+            error: z.flattenError(parsedBody.error).fieldErrors
+        })
+    }
+
+    const { name , email , password } = parsedBody.data;    
     await userSigningUpService(name , email , password);    
     return res.status(200).json({        
         message : "User signed Up Successfully",        
@@ -14,7 +24,15 @@ const signUpUser = wrapAsync( async(req , res) => {
 });
 
 const signInUser = wrapAsync(async(req , res) => {
-    const {email , password} = req.body;    
+    const parsedBody = safeSignInSchema.safeParse(req.body)
+    if(!parsedBody.success){
+        return res.status(400).json({
+            message: "Invalid Format",
+            error: z.flattenError(parsedBody.error).fieldErrors
+        })
+    }
+    
+    const {email , password} = parsedBody.data;    
     const user = await findUser(email);    
     const token = await userSigningInService(user , password);    
     res.cookie("accessToken", token, cookieOptions);    
