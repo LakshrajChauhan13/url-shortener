@@ -41,7 +41,7 @@ app.use(errorHandler)
 async function main(){
     try {
         await connectDB()
-        app.listen(process.env.PORT || 3000) // changed to 3001 from 3000, same in the .env file
+        app.listen(process.env.PORT || 3000)
         console.log("Successfully connected to DB"); 
         console.log("Server is running on the port " + (process.env.PORT || 3000));
     }
