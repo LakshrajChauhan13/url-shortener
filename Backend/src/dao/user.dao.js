@@ -28,7 +28,8 @@ async function findUser(email){
      const response = await userModel.findOne({
         email : email 
     })
-    if(!response) throw new NotFoundError("Invalid credentials ")
+
+    if(!response) throw new NotFoundError("User doesn't exist")
     return response
   }
 

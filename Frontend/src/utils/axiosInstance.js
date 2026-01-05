@@ -36,13 +36,13 @@ axiosInstance.interceptors.response.use(
           error.message = data.message || 'Invalid request. Please check your URL.';
           break;
         case 404:
-          error.message = 'Service not found. Please try again later.';
+          error.message = data.message || 'Service not found. Please try again later.';
           break;
         case 409:
           error.message = data.message || 'URL already exists.';
           break;
         case 500:
-          error.message = 'Server error. Please try again later.';
+          error.message = data.message || 'Server error. Please try again later.';
           break;
         default:
           error.message = data.message || `Request failed with status ${status}`;
