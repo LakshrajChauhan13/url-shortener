@@ -5,7 +5,7 @@ export async function signUpUser(name , email , password){
     console.log(response);
     
     return {
-        message : response.data.message
+        message : response.data
     }
 }
 
