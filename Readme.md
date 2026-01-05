@@ -56,37 +56,44 @@ A full-stack URL shortening application built with React, Node.js, Express, and 
 ---
 
 ## 📁 Project Structure
+
+```
 url-shortener/
 ├── 📂 Frontend/
-│ ├── 📂 src/
-│ │ ├── 📁 api/ # 🌐 API calls
-│ │ ├── 📁 components/ # 🧩 React components
-│ │ ├── 📁 pages/ # 📄 Page components
-│ │ ├── 📁 routing/ # 🗺️ Route configuration
-│ │ ├── 📁 store/ # 🏪 Redux store & slices
-│ │ ├── 📁 utils/ # 🛠️ Helper functions
-│ │ ├── 📁 zod/ # ✔️ Validation schemas
-│ │ └── 📄 main.jsx # 🎯 Entry point
-│ ├── 📄 .env # ⚙️ Environment variables
-│ ├── 📄 index.html
-│ ├── 📄 vite.config.js
-│ └── 📄 package.json
+│   ├── 📂 src/
+│   │   ├── 📁 api/              # 🌐 API calls
+│   │   ├── 📁 components/       # 🧩 React components
+│   │   ├── 📁 pages/            # 📄 Page components
+│   │   ├── 📁 routing/          # 🗺️ Route configuration
+│   │   ├── 📁 store/            # 🏪 Redux store & slices
+│   │   ├── 📁 utils/            # 🛠️ Helper functions
+│   │   ├── 📁 zod/              # ✔️ Validation schemas
+│   │   └── 📄 main.jsx          # 🎯 Entry point
+│   ├── 📄 .env                  # ⚙️ Environment variables
+│   ├── 📄 .env.production       # 🌐 Production config
+│   ├── 📄 index.html
+│   ├── 📄 vite.config.js
+│   ├── 📄 vercel.json           # 🚀 Vercel deployment config
+│   └── 📄 package.json
 │
 └── 📂 Backend/
-├── 📂 src/
-│ ├── 📁 controllers/ # 🎮 Route handlers
-│ ├── 📁 dao/ # 💾 Database operations
-│ ├── 📁 middleware/ # 🔧 Express middleware
-│ ├── 📁 models/ # 📊 MongoDB schemas
-│ ├── 📁 routes/ # 🛣️ API routes
-│ ├── 📁 services/ # ⚙️ Business logic
-│ ├── 📁 utils/ # 🛠️ Helper utilities
-│ ├── 📁 zod/ # ✔️ Validation schemas
-│ └── 📁 db/ # 🗄️ Database connection
-├── 📂 config/
-├── 📄 .env
-├── 📄 app.js
-└── 📄 package.json
+    ├── 📂 src/
+    │   ├── 📁 controllers/      # 🎮 Route handlers
+    │   ├── 📁 dao/              # 💾 Database operations
+    │   ├── 📁 middleware/       # 🔧 Express middleware
+    │   ├── 📁 models/           # 📊 MongoDB schemas
+    │   ├── 📁 routes/           # 🛣️ API routes
+    │   ├── 📁 services/         # ⚙️ Business logic
+    │   ├── 📁 utils/            # 🛠️ Helper utilities
+    │   ├── 📁 zod/              # ✔️ Validation schemas
+    │   └── 📁 db/               # 🗄️ Database connection
+    ├── 📂 config/               # ⚙️ Configuration files
+    ├── 📄 .env                  # 🔐 Environment variables
+    ├── 📄 .env.example          # 📝 Example config
+    ├── 📄 app.js                # 🚀 Main app file
+    └── 📄 package.json
+```
+
 
 
 ---
