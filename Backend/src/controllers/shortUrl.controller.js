@@ -7,9 +7,6 @@ const { safeUrlSchema } = require("../zod/zod.user")
 const createShortUrl = wrapAsync(async (req , res ) => {
     const parsedBody = safeUrlSchema.safeParse(req.body)
 
-    console.log("first")
-    console.log("second")
-    
     if(!parsedBody.success){
         return res.status(400).json({
             message: "Invalid Format",
