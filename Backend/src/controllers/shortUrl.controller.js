@@ -7,16 +7,18 @@ const { safeUrlSchema } = require("../zod/zod.user")
 const createShortUrl = wrapAsync(async (req , res ) => {
     const parsedBody = safeUrlSchema.safeParse(req.body)
 
+    console.log("first")
+    console.log("second")
+    
     if(!parsedBody.success){
         return res.status(400).json({
             message: "Invalid Format",
             errors: z.flattenError(parsedBody.error).fieldErrors
         })
     }
-    
     const {url , customUrl} = parsedBody.data;
     const userId = req.id;
-    
+    console.log(customUrl)
     let shortUrl
     if(userId){
         shortUrl = await createShortUrlWithUserService(url , userId , customUrl) //userId        
