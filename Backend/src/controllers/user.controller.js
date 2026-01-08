@@ -15,11 +15,20 @@ const getAllUserUrls = wrapAsync(async(req , res) => {
 
 
 const deleteUrl = wrapAsync(async(req , res) => {
-    const {id} = req.body
-    await deleteUrlbyId(id)
+    const id = req.params.id
+    const userId = req.id
+    
+    const deletedContent = await deleteUrlbyId(id, userId)
 
+    if(!deletedContent){
+        return res.status(404).json({
+            message: "Sorry! The content you are trying to delete, doesn't exists"
+        })
+    }
+    
     res.json({
-        message : " URL deleted ",
+        deletedContent: deletedContent,
+        message : "URL deleted",
     })
 } )
 

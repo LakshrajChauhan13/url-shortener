@@ -51,9 +51,10 @@ async function getAllUrls(userId){
   }
 
 
-async function deleteUrlbyId(id){
+async function deleteUrlbyId(id, userId){
      const response = await UrlModel.findOneAndDelete({
-         _id : id
+         _id : id,
+         userId: userId
     })
     return response
   }

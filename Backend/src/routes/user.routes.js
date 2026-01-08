@@ -6,7 +6,7 @@ const { getAllUserUrls, deleteUrl } = require('../controllers/user.controller')
 const userRouter = express.Router()
 
 userRouter.get('/get-urls' , authMiddleware , getAllUserUrls  )
-userRouter.post('/delete-urls' , authMiddleware , deleteUrl  )
+userRouter.delete('/delete-urls/:id' , authMiddleware , deleteUrl  )
 
 
 module.exports = {
