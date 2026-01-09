@@ -10,6 +10,7 @@ const UrlCard = ({id, urlData, index }) => {
   const backendUrl = import.meta.env.VITE_API_URL || 'http://localhost:3000';
   const queryClient = useQueryClient()
   const refClock = useRef()
+  const [isDeleting, setIsDeleting] = useState(false)
 
   const copyToClipboard = (text) => {
     navigator.clipboard.writeText(text);
@@ -31,6 +32,8 @@ const UrlCard = ({id, urlData, index }) => {
 
    function urlDeletion(id){
 
+    setIsDeleting(c => !c)
+    
     if(refClock.current){
         clearTimeout(refClock.current)
         refClock.current = 0
@@ -40,6 +43,7 @@ const UrlCard = ({id, urlData, index }) => {
       }
 
       function handleUndo() {
+        setIsDeleting(c => !c)
         clearTimeout(refClock.current)
         refClock.current = 0;
         toast.dismiss(`delete-${id}`)
@@ -149,11 +153,13 @@ const UrlCard = ({id, urlData, index }) => {
         
         <div className=' md:col-span-5 flex flex-col items-end space-y-2 '>
           <motion.span
-          whileTap={{scale:0.8}}
-          whileHover={{ scale: 1.3}}
-           onClick={() => urlDeletion(id)}
+            whileTap={{scale:0.8}}
+            whileHover={{ scale: 1.3}}
+            onClick={() => urlDeletion(id)}
+            className= {` ${isDeleting ? 'bg-red-600/80 text-white px-1.5 py-1 rounded-full cursor-pointer' : 'hover:text-red-500 text-gray-400 transition-all ease-in-out cursor-pointer'} `}
            >
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"  className="size-4.5 hover:text-red-500 text-gray-400 duration-200 transition-all ease-in-out cursor-pointer">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"  
+              className="size-4">
               <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
             </svg>
             {/* <DeleteButton /> */}
