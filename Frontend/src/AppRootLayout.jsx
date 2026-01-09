@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { Outlet, useLocation } from '@tanstack/react-router'
 import Navbar from './components/NavBar'
 import { AuthProvider } from './components/AuthProvider'
+import { Toaster } from 'sonner'
 
 const AppRootLayout = () => {
 
@@ -22,6 +23,7 @@ const AppRootLayout = () => {
       <div>
         <Navbar />
         <Outlet />
+        <Toaster  />
       </div>
     </AuthProvider>
   )
