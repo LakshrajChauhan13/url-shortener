@@ -1,12 +1,13 @@
 // Frontend/src/components/Navbar.jsx
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate, useRouter } from '@tanstack/react-router';
 import { motion } from 'framer-motion';
 import { useDispatch, useSelector } from 'react-redux';
 import { signOutUser } from '../api/user.api';
 import { logout } from '../store/slice/authSlice';
-import { useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import Logo from '../../Logo';
+import { toast } from 'sonner';
 
 const Navbar = () => {
   const router = useRouter();
@@ -19,13 +20,35 @@ const Navbar = () => {
    console.log(auth)
    const navigate = useNavigate()
    const queryClient = useQueryClient() ; // to remove the query from the cache after the user logs out
+
+
+   const signOutMutation = useMutation({
+      mutationFn: signOutUser,
+
+      onMutate: () => {
+        const id = toast.loading("Logging Out ... :(")
+        return id
+      },
+      
+      onSuccess:(context) => {
+        dispatch(logout()) ;
+        toast.dismiss(context.id)
+        toast("User has Logged Out")
+        localStorage.removeItem("isAuthenticated")
+        queryClient.removeQueries({ queryKey: ['currentUser'] });
+        navigate({ to : "/auth"}) ;      
+      },
+
+      onError: (error, context) => {
+        toast.dismiss(context.id)
+        toast.error("Failed to logout...")
+        console.log(error)
+      }
+   })
+   
    
    const handleLogOut = () => {
-      signOutUser() ;
-      dispatch(logout()) ;
-      localStorage.setItem("isAuthenticated", "false")
-      queryClient.removeQueries({ queryKey: ['currentUser'] });
-      navigate({ to : "/auth"}) ;
+      signOutMutation.mutate()
    }
 
   return (
