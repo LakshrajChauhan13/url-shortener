@@ -1,8 +1,13 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import UrlCard from './UrlCard';
+import { deleteUrl } from '../../api/deleteShortUrl.api';
+import { useMutation } from '@tanstack/react-query';
 
 const UrlsList = ({ urls = [], isLoading, error, onRefresh }) => {
+
+ 
+  
   return (
     <motion.div
       initial={{ opacity: 0, x: 20 }}
@@ -56,7 +61,7 @@ const UrlsList = ({ urls = [], isLoading, error, onRefresh }) => {
         ) : (
           <div className="space-y-4 max-h-[500px] overflow-y-auto pr-2">
             {urls.map((urlItem, index) => (
-              <UrlCard key={urlItem._id} urlData={urlItem} index={index} />
+              <UrlCard key={urlItem._id} urlData={urlItem} index={index} id={urlItem._id}  />
             ))}
           </div>
         )}
