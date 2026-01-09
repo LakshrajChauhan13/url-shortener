@@ -97,7 +97,7 @@ const UrlCard = ({id, urlData, index }) => {
       className="border-2 border-slate-200 rounded-xl p-5 hover:shadow-lg hover:border-slate-300 transition-all duration-300 bg-linear-to-br from-white to-slate-50"
     >
     <div className=' '> 
-      <div className="grid grid-cols-1 md:grid-cols-12 gap-4 ">
+      <div className="flex justify-between md:grid-cols-12 gap-4 ">
         
         {/* URL Info */}
         <div className="md:col-span-7 space-y-3 ">
@@ -167,7 +167,7 @@ const UrlCard = ({id, urlData, index }) => {
             
 
           {/* Analytics */}
-          <div className="md:col-span-5 flex items-center justify-between md:justify-end space-x-6 ">
+          <div className="md:col-span-5 flex items-end justify-between md:justify-end space-x-6 ">
                   
             {/* Clicks */}
             <div className="text-center">
@@ -185,14 +185,14 @@ const UrlCard = ({id, urlData, index }) => {
             </div>
 
             {/* Created Date */}
-            <div className="text-center">
+            {/* <div className="text-center">
               <p className="text-xs font-bold text-slate-500 uppercase tracking-wide mb-1">
                 Created
               </p>
               <p className="text-xs text-slate-600">
                 {formatDate(urlData.createdAt)}
               </p>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
