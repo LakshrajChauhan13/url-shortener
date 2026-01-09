@@ -5,12 +5,16 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod'
 import { safeSignUpSchema } from '../zod/zod.user';
 import { useMutation } from '@tanstack/react-query';
+import EyeIcon from '@/icons/EyeIcon';
+import EyeHideIcon from '@/icons/EyeHideIcon';
 
 const SignUpForm = ({ setIsSignUp }) => {
   
   const [serverError, setServerError] = useState('');
   const [success, setSuccess] = useState('');
   const [focused, setFocused] = useState('');
+  const [passwordShown, setPasswordShown] = useState(false)
+  const [confirmPasswordShown, setConfirmPasswordShown] = useState(false)
 
   const signUpMutation = useMutation({
     mutationFn: (data) => signUpUser(data.name, data.email, data.password),
@@ -35,6 +39,14 @@ const SignUpForm = ({ setIsSignUp }) => {
   const submitHandler = async (data) => {
     signUpMutation.mutate(data)
   };
+
+  function passwordToggling(){
+    setPasswordShown(c => !c)
+  }
+
+  function confirmPasswordToggling(){
+    setConfirmPasswordShown(c => !c)
+  }
 
   return (
     <motion.form
@@ -86,7 +98,7 @@ const SignUpForm = ({ setIsSignUp }) => {
       {/* Password Field */}
       <div className="relative">
         <input
-          type="password"
+          type={`${passwordShown?'text':'password'}`}
           name="password"
           {...register("password")}
           onFocus={() => setFocused('password')}
@@ -99,13 +111,22 @@ const SignUpForm = ({ setIsSignUp }) => {
               : 'border-slate-200 hover:border-slate-300'
           }`}
         />
+          <button 
+          type="button"
+          onFocus={() => setFocused('password')}
+          onBlur={() => setFocused('')} 
+          onClick={passwordToggling}
+          className={` ${focused === 'password' ? 'text-slate-400 scale-[1.1]' : 'text-slate-300 hover:text-slate-500 ' } 
+          cursor-pointer transition-all duration-300  absolute top-4 right-3`}>
+             {passwordShown ? <EyeHideIcon /> : <EyeIcon /> }  
+          </button>
         {errors.password && <span className=' text-red-500 font-semibold text-sm tracking-wide'> {errors.password.message} </span>}
       </div>
 
       {/* Confirm Password Field */}
       <div className="relative">
         <input
-          type="password"
+          type={`${confirmPasswordShown?'text':'password'}`}
           name="confirmPassword"
           {...register("confirmPassword")}
           onFocus={() => setFocused('confirmPassword')}
@@ -118,6 +139,15 @@ const SignUpForm = ({ setIsSignUp }) => {
               : 'border-slate-200 hover:border-slate-300'
           }`}
         />
+          <button
+          type='button'
+          onFocus={() => setFocused('confirmPassword')}
+          onBlur={() => setFocused('')}
+          onClick={confirmPasswordToggling}
+          className={` ${focused === 'confirmPassword' ? 'text-slate-400 scale-[1.1]' : 'text-slate-300 hover:text-slate-500 ' } 
+          cursor-pointer transition-all duration-300  absolute top-4 right-3`}>
+            {confirmPasswordShown ? <EyeHideIcon /> : <EyeIcon />}
+          </button>
         {errors.confirmPassword && <span className=' text-red-500 font-semibold text-sm tracking-wide'> {errors.confirmPassword.message} </span> }
       </div>
 

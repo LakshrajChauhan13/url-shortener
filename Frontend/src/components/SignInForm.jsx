@@ -8,6 +8,8 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { safeSignInSchema } from '../zod/zod.user';
+import EyeHideIcon from '@/icons/EyeHideIcon';
+import EyeIcon from '@/icons/EyeIcon';
 
 const SignInForm = ({ setIsSignUp }) => {
 
@@ -18,6 +20,7 @@ const SignInForm = ({ setIsSignUp }) => {
   const dispatch = useDispatch() // to dispatch an event to the reducer so that it can update the store's value
   const queryClient = useQueryClient()
   const [serverError, setServerError] = useState('')
+  const [passwordShown, setPasswordShown] = useState(false)
 
   const { register, handleSubmit, formState: { errors }, reset} = useForm({
     resolver: zodResolver(safeSignInSchema)
@@ -40,8 +43,15 @@ const SignInForm = ({ setIsSignUp }) => {
     onError: (error) => {
       console.log(error); 
       setServerError(error.message)
+      setTimeout(() => {
+        setServerError('')
+      }, 4000);
     }
   })
+
+  function passwordToggling() {
+    setPasswordShown(c => !c)
+  }
 
   return (
     <motion.form
@@ -74,7 +84,7 @@ const SignInForm = ({ setIsSignUp }) => {
       {/* Password Field */}
       <div className="relative">
         <input
-          type="password"
+          type={`${passwordShown?'text':'password'}`}
           name="password"
           {...register("password")}
           onFocus={() => setFocused('password')}
@@ -87,6 +97,15 @@ const SignInForm = ({ setIsSignUp }) => {
               : 'border-slate-200 hover:border-slate-300'
           }`}
         />
+          <button 
+          type="button"
+          onFocus={() => setFocused('password')}
+          onBlur={() => setFocused('')} 
+          onClick={passwordToggling}
+          className={` ${focused === 'password' ? 'text-slate-400 scale-[1.1]' : 'text-slate-300 hover:text-slate-500 ' } 
+          cursor-pointer transition-all duration-300  absolute top-4 right-3`}>
+             {passwordShown ? <EyeHideIcon /> : <EyeIcon />  }  
+          </button>
         {errors.password && <span className='text-sm text-red-500 font-semibold tracking-wide'> {errors.password.message} </span>}
       </div>
 
