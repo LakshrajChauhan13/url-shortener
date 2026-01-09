@@ -20,7 +20,7 @@ const safeSignInSchema = z.object({
 
 const safeUrlSchema = z.object({
         url: z.url("Please provide a vaild URL, eg. 'https://app.oorly.in' "),
-        customUrl: z.string().trim().nullable()
+        customUrl: z.string().trim().nullish()
     })
 
 module.exports = {
