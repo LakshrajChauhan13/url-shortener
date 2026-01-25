@@ -104,7 +104,7 @@ const SignInForm = ({ setIsSignUp }) => {
           onClick={passwordToggling}
           className={` ${focused === 'password' ? 'text-slate-400 scale-[1.1]' : 'text-slate-300 hover:text-slate-500 ' } 
           cursor-pointer transition-all duration-300  absolute top-4 right-3`}>
-             {passwordShown ? <EyeHideIcon /> : <EyeIcon />  }  
+             {passwordShown ? <EyeIcon /> : <EyeHideIcon /> }  
           </button>
         {errors.password && <span className='text-sm text-red-500 font-semibold tracking-wide'> {errors.password.message} </span>}
       </div>

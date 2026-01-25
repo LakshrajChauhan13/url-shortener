@@ -20,7 +20,7 @@ const AppRootLayout = () => {
 
   return (
     <AuthProvider>
-      <div>
+      <div className='h-screen'>
         <Navbar />
         <Outlet />
         <Toaster  />

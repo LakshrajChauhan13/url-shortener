@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import UrlForm from     '../components/UrlForm.jsx';
-import axios from 'axios';
-import { createShortUrlApi } from '../api/shortUrl.api.js';
-import { useSelector } from 'react-redux';
+import { createShortUrlApi } from "@/api/shortUrl.api";
+import { HoverEffect } from "@/components/ui/card-hover-effect";
+import UrlForm from "@/components/UrlForm"
+import { Home08FreeIcons } from "@hugeicons/core-free-icons/index";
+import { Link } from "@tanstack/react-router";
+import { useState } from "react";
+import { useSelector } from "react-redux";
 
-
-const HomePage = () => {
-  const [url, setUrl] = useState('');
+const Homepage = () => {
+  const [url, setUrl] = useState(''); 
   const [shortUrl, setShortUrl] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -14,39 +15,45 @@ const HomePage = () => {
   const [focused, setFocused] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const { isAuthenticated } = useSelector(state => state.auth)
-  useEffect(() => {
-    setIsVisible(true);
-  }, []);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!url) return;
-    setLoading(true);
-    setError('');
-    
-    try {
-      const {shortUrl , status} = await createShortUrlApi(url , isAuthenticated )  // axios call
-    
-      if (status === 200) {
-        setShortUrl(`${import.meta.env.VITE_API_URL || 'http://localhost:3000'}/${shortUrl}`)
-      } else { 
-        setError('Failed to create short URL')
-      }
-    } catch (err) {
-      setError('Network error occurred')
-    } finally {
-      setLoading(false)
-    }
-  }
 
-  const copyToClipboard = async () => {
-    try {
-      await navigator.clipboard.writeText(shortUrl)
-      setCopied(true)
-      setTimeout(() => setCopied(false), 2000)
-    } catch (err) {
-      alert('Failed to copy!')
-    }
+   const handleSubmit = async (e) => {
+     e.preventDefault();
+     if (!url) return;
+     setLoading(true);
+     setError('');
+     
+     try {
+       const {shortUrl , status} = await createShortUrlApi(url , isAuthenticated )  // axios call
+       
+       if (status === 200) {
+         setError('')
+         setShortUrl(`${import.meta.env.VITE_API_URL || 'http://localhost:3000'}/${shortUrl}`)
+        //    setTimeout(() => {
+        //      setShortUrl('')
+        //    }, 30000)
+       } else { 
+         setError('Failed to create short URL')
+       }
+     } catch (err) {
+       setError('Network error occurred')
+       setTimeout(() => {
+         setError('')
+       }, 15000)
+       setShortUrl('')
+     } finally {
+       setLoading(false)
+     }
+   }
+
+    const copyToClipboard = async () => {
+        try {
+        await navigator.clipboard.writeText(shortUrl)
+        setCopied(true)
+        setTimeout(() => setCopied(false), 2000)
+        } catch (err) {
+        alert('Failed to copy!')
+        }
   }
 
   const resetForm = () => {
@@ -56,36 +63,78 @@ const HomePage = () => {
     setCopied(false)
   }
 
+  const items = [
+     {
+    title: "⚡️ Lightning Fast",
+    description:
+      "Paste, click, done. Generate short links in seconds from the homepage2 or dashboard..",
+  },
+  {
+    title: "✨ Custom Aliases",
+    description:
+      "Claim your brand. Create memorable links like oorly.in/launch instead of random characters.",
+  },
+  {
+    title: "📈 Real-Time Analytics",
+    description:
+      "Don't fly blind. Track total clicks and engagement instantly from your dashboard.",
+  },
+  {
+    title: "🕹️ Total Control",
+    description:
+      "Manage everything in one place. Copy, organize, and delete links with a single click.",
+  },
+  {
+    title: "🔒 Secure & Reliable",
+    description:
+      "Safe redirects for your users, reliable uptime for you.",
+  },
+  ]
+    
+  
   return (
-    <div className="h-screen bg-linear-to-br from-slate-50 to-slate-100 flex items-center justify-center p-4 overflow-hidden">
-      {/* Enhanced background decoration */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-1/4 right-1/4 w-64 h-64 bg-blue-50 rounded-full opacity-40 blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-1/4 left-1/4 w-64 h-64 bg-slate-50 rounded-full opacity-40 blur-3xl animate-pulse delay-1000"></div>
-        <div className="absolute top-1/2 left-1/2 w-32 h-32 bg-indigo-50 rounded-full opacity-30 blur-2xl animate-bounce delay-500"></div>
-      </div>
+ 
+    <div className="min-h-screen w-full z-50 bg-[#f9fafb] relative">
+  {/* Diagonal Stripes Background */}
+ <div
+    className="absolute inset-0 z-0"
+    style={{
+      backgroundImage: `
+        linear-gradient(to right, #d1d5db 1px, transparent 1px),
+        linear-gradient(to bottom, #d1d5db 1px, transparent 1px)
+      `,
+      backgroundSize: "32px 32px",
+      WebkitMaskImage:
+        "radial-gradient(ellipse 80% 80% at 100% 0%, #000 50%, transparent 90%)",
+      maskImage:
+        "radial-gradient(ellipse 80% 80% at 100% 0%, #000 50%, transparent 90%)",
+    }}
+  />
+     {/* Your Content/Components */}
+    
+    <div className="max-w-7xl mx-auto relative z-55 ">
+        <div className="min-h-screen pt-20 md:pt-15 lg:pt-20 flex flex-col items-center gap-5 "> 
+            
+            <div className=" max-w-[170px] mx-auto lg:-translate-x-4 mt-0 md:mt-10 text-neutral-800 opacity-90  font-semibold  backdrop-blur-[1px] flex 
+            justify-center items-center text-[8px] sm:text-sm sm:px-3  px-2 py-2 rounded-full z-100 inset-shadow-aceternity">
+                Fast • Secure • Simple
+            </div>
 
-      <div className={`relative bg-white/80 backdrop-blur-xl rounded-3xl shadow-2xl border border-slate-200/50 p-8 w-full max-w-md transition-all duration-1000 ${
-        isVisible ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-8 scale-95'
-      }`}>
-        {/* Enhanced Header */}
-        <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-14 h-14 bg-linear-to-br from-slate-800 to-slate-900 rounded-2xl mb-4 group hover:scale-110 hover:rotate-3 transition-all duration-300 shadow-lg hover:shadow-xl">
-            <svg className="w-7 h-7 text-white group-hover:scale-110 transition-all duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
-            </svg>
-          </div>
-          <h1 className="text-3xl font-bold text-slate-900 mb-2 hover:text-slate-700 transition-colors duration-300">
-            URL Shortener
-          </h1>
-          <p className="text-slate-600 text-sm animate-fade-in delay-300">Create clean, shareable links in seconds</p>
-        </div>
-        
-        <UrlForm  handleSubmit={handleSubmit} setFocused={setFocused} focused={focused} setLoading={setLoading} loading={loading} setUrl={setUrl} url={url} resetForm={resetForm} />
-       
+        <div>
+            <div className="flex flex-col items-center  ">
+                <h1 className=" max-w-sm text-6xl sm:max-w-none sm:text-5xl text-shadow-lg  md:text-8xl xl:h-28 sm:h-50 h-36 text-center bg-clip-text text-transparent 
+                bg-linear-to-r from-neutral-950 via-slate-900 to-slate-700  font-sans-flex font-bold tracking-tight "> 
+                    Stop sending ugly links.
+                </h1>
+                <h6 className="text-[10px] px-4 sm:text-xl tracking-wide sm:tracking-widest  sm:mt-2 text-center text-neutral-400 font-sans-flex">
+                    Turn long, messy URLs into clean, custom links like oorly.in/brand. Free to use, easy to track.
+                </h6>
+            </div>
 
+            <UrlForm  handleSubmit={handleSubmit} setFocused={setFocused} focused={focused} setLoading={setLoading} loading={loading} setUrl={setUrl} url={url} resetForm={resetForm} />
+            {/* <p className=" w-full text-center text-slate-600 text-lg mt-5 tracking-wider font-semibold animate-fade-in delay-300">Create clean, shareable links in seconds</p> */}
         {error && (
-          <div className="mt-6 p-4 bg-red-50/80 backdrop-blur-sm border border-red-200 text-red-700 rounded-xl animate-in slide-in-from-top-4 duration-500 hover:bg-red-50 transition-colors">
+          <div className=" md:max-w-2xl lg:max-w-4xl mx-auto max-w-[410px] mt-4 p-4 bg-red-50/80 backdrop-blur-sm border border-red-200 text-red-700 rounded-xl animate-in slide-in-from-top-4 duration-500 hover:bg-red-50 transition-colors">
             <div className="flex items-center space-x-2">
               <svg className="w-5 h-5 text-red-500 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -94,11 +143,11 @@ const HomePage = () => {
             </div>
           </div>
         )}
-
+        
         {shortUrl && (
-          <div className="mt-6 p-5 bg-green-50/80 backdrop-blur-sm border border-green-200 rounded-xl animate-in slide-in-from-bottom-4 duration-500 hover:bg-green-50 transition-colors hover:scale-[1.01] hover:shadow-md">
-            <div className="flex items-center space-x-2 mb-4">
-              <svg className="w-5 h-5 text-green-600 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div className="md:max-w-2xl lg:max-w-4xl mx-auto max-w-[410px] mt-4 p-5 bg-green-50/80 backdrop-blur-sm border border-green-200 rounded-xl animate-in slide-in-from-bottom-4 duration-500 hover:bg-green-50     transition-all hover:shadow-md">
+            <div className="flex items-center space-x-1 mb-3">
+              <svg className="w-5 h-5 text-green-600 " fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
               </svg>
               <p className="text-green-800 font-semibold text-sm">Link created successfully!</p>
@@ -112,13 +161,13 @@ const HomePage = () => {
               />
               <button
                 onClick={copyToClipboard}
-                className={`px-5 py-3 rounded-lg text-sm font-semibold transition-all duration-300 transform hover:scale-110 active:scale-95 relative overflow-hidden group ${
+                className={`px-5 py-3 rounded-lg text-sm font-semibold transition-all duration-300 transform hover:scale-105 active:scale-95 relative overflow-hidden group ${
                   copied 
                     ? 'bg-green-600 text-white shadow-lg' 
-                    : 'bg-slate-900 hover:bg-slate-800 text-white shadow-md hover:shadow-lg'
+                    : 'bg-slate-900 hover:bg-slate-950 text-white shadow-md hover:shadow-lg'
                 }`}
               >
-                <div className="absolute inset-0 bg-linear-to-r from-white/0 via-white/20 to-white/0 translate-x-full group-hover:translate-x-full transition-transform duration-500"></div>
+                {/* <div className="absolute inset-0 bg-linear-to-r from-white/0 via-white/20 to-white/0 -translate-x-50 group-hover:translate-x-full transition-transform duration-500"></div> */}
                 {copied ? (
                   <div className="flex items-center space-x-1 animate-in zoom-in duration-200">
                     <svg className="w-4 h-4 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -127,8 +176,8 @@ const HomePage = () => {
                     <span>Copied!</span>
                   </div>
                 ) : (
-                  <div className="flex items-center space-x-1 group-hover:scale-105 transition-transform duration-200">
-                    <svg className="w-4 h-4 group-hover:rotate-12 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <div className="flex items-center space-x-1 group-hover:scale-105 transition-all duration-200">
+                    <svg className="w-4 h-4   transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
                     </svg>
                     <span>Copy</span>
@@ -138,22 +187,78 @@ const HomePage = () => {
             </div>
           </div>
         )}
-
-
-
-
-        {/* Enhanced Footer */}
-        <div className="mt-8 text-center">
-          <p className="text-slate-400 text-xs hover:text-slate-500 transition-colors duration-200 cursor-default">
-            Fast • Secure • Simple
-          </p>
-        </div>
-      </div>
     </div>
+
+</div>
+    <div className="  max-w-8xl mx-auto mt-10 md:mt-40 lg:mt-0 flex flex-col items-center gap-5 min-h-screen">
+            <div className="flex flex-col gap-2 items-center">
+                <h1 className=" text-3xl sm:text-6xl font-sans-flex font-bold"> 
+                    Features Oorly provides
+                </h1>
+                <h2 className=" text-sm sm:text-xl tracking-wide font-sans-flex text-neutral-500"> Key features </h2>
+            </div>
+
+             <HoverEffect items={items} className={"text-lg font-sans-flex "}/>
+        
+        </div>
+
+    <div className="  mt-10 md:mt-40 lg:mt-0 p-2 min-h-screen flex flex-col items-center  gap-10">
+        <span className="flex flex-col items-center gap-2">
+            <h1 className="text-3xl sm:text-6xl font-bold font-sans-flex tracking-wide">See it in action</h1>
+            <h2 className=" text-sm sm:text-xl tracking-wide font-sans-flex text-neutral-500"> Unlock the power of the oorly dashboard </h2>
+        </span>
+
+        <iframe
+        src="https://player.cloudinary.com/embed/?cloud_name=dtg6fers0&public_id=oorly-1769297110838_mw1tex"
+        width="640"
+        height="360" 
+        className="h-auto w-full border-8 border-neutral-200 p-2 aspect-video rounded-2xl  shadow-2xl "
+        allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
+        allowfullscreen
+        frameborder="0"
+        >
+
+        </iframe>
+    </div>  
+    <footer className="min-h-30 sm:min-h-40 max-w-7xl mx-auto w-full flex flex-col items-center sm:mt-50 gap-5 pb-5 ">
+         <span className="text-sm sm:text-lg tracking-tight font-semibold  text-neutral-500  text-center  "> 
+            No credit card required.{" "} 
+                <Link to={"/auth"} className="text-neutral-700  
+                relative after:absolute after:inset-x-0 align-bottom  inline-block after:bottom-0.5 after:bg-black after:-translate-x-50 after:transition-all after:duration-250 
+                transition-all duration-200 after:h-[2px] after:w-full z-10 after:-z-1 hover:after:translate-x-0
+                overflow-hidden sm:text-2xl  text-[16px] 
+                "> {" "} Login  </Link> 
+            {" "}to use all features for free.
+            
+         </span>
+
+        <div className="h-px w-full bg-linear-to-r from-transparent via-neutral-200 to-transparent " />
+        <div className="flex items-center justify-center w-full text-sm sm:text-[15px] text-neutral-500 font-medium gap-2">
+        
+        {/* Left Side: Copyright */}
+        <p>&copy;{new Date().getFullYear()} Oorly.</p>
+
+        {/* Right Side: Credit */}
+        <p className="flex items-center gap-1">
+            Built by
+            <a 
+                href="https://github.com/LakshrajChauhan13" 
+                target="_blank" 
+                rel="noreferrer"
+                className="text-neutral-900 tracking-tight hover:text-black transition-colors underline underline-offset-4"
+            >
+                Lakshraj
+            </a>
+        </p>
+    </div>
+    </footer>
+         
+    
+
+    </div>
+
+     </div>
   )
 }
 
-export default HomePage
-
-
-// update dashboard page , where we user can create short urls and cutom urls if want ,see his name at the place of dashboard in the nav bar, ofcouse if user is authenticated , user will see his name instead of the dashboard text and onclick to the bitly logo will back to the dashboard page instead of the homepage of course
+export default Homepage

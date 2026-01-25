@@ -118,7 +118,7 @@ const SignUpForm = ({ setIsSignUp }) => {
           onClick={passwordToggling}
           className={` ${focused === 'password' ? 'text-slate-400 scale-[1.1]' : 'text-slate-300 hover:text-slate-500 ' } 
           cursor-pointer transition-all duration-300  absolute top-4 right-3`}>
-             {passwordShown ? <EyeHideIcon /> : <EyeIcon /> }  
+             {passwordShown ? <EyeIcon /> : <EyeHideIcon /> }  
           </button>
         {errors.password && <span className=' text-red-500 font-semibold text-sm tracking-wide'> {errors.password.message} </span>}
       </div>
@@ -146,7 +146,7 @@ const SignUpForm = ({ setIsSignUp }) => {
           onClick={confirmPasswordToggling}
           className={` ${focused === 'confirmPassword' ? 'text-slate-400 scale-[1.1]' : 'text-slate-300 hover:text-slate-500 ' } 
           cursor-pointer transition-all duration-300  absolute top-4 right-3`}>
-            {confirmPasswordShown ? <EyeHideIcon /> : <EyeIcon />}
+            {confirmPasswordShown ? <EyeIcon /> : <EyeHideIcon /> }
           </button>
         {errors.confirmPassword && <span className=' text-red-500 font-semibold text-sm tracking-wide'> {errors.confirmPassword.message} </span> }
       </div>
