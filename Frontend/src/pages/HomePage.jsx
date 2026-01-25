@@ -225,7 +225,7 @@ const Homepage = () => {
             No credit card required.{" "} 
                 <Link to={"/auth"} className="text-neutral-700  
                 relative after:absolute after:inset-x-0 align-bottom  inline-block after:bottom-0.5 after:bg-black after:-translate-x-50 after:transition-all after:duration-250 
-                transition-all duration-200 after:h-[2px] after:w-full z-10 after:-z-1 hover:after:translate-x-0
+                transition-all duration-200 after:h-0.5 after:w-full z-10 after:-z-1 hover:after:translate-x-0
                 overflow-hidden sm:text-2xl  text-[16px] 
                 "> {" "} Login  </Link> 
             {" "}to use all features for free.

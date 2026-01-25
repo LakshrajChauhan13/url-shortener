@@ -1,6 +1,6 @@
 import AppRootLayout from "../AppRootLayout.jsx";
 import { createRootRoute } from "@tanstack/react-router";
-import { createHomePage2Route, createHomePageRoute } from "./homepage.js";
+import { createHomePage2Route createHomePageRoute } from "./homepage.js";
 import { createAuthPageRoute } from "./auth.route.js";
 import { createDashBoardPageRoute } from "./DashBoardPage.js";
 
