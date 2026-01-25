@@ -1,7 +1,6 @@
 import { createShortUrlApi } from "@/api/shortUrl.api";
 import { HoverEffect } from "@/components/ui/card-hover-effect";
 import UrlForm from "@/components/UrlForm"
-import { Home08FreeIcons } from "@hugeicons/core-free-icons/index";
 import { Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { useSelector } from "react-redux";
@@ -13,7 +12,6 @@ const Homepage = () => {
   const [error, setError] = useState('');
   const [copied, setCopied] = useState(false);
   const [focused, setFocused] = useState(false);
-  const [isVisible, setIsVisible] = useState(false);
   const { isAuthenticated } = useSelector(state => state.auth)
 
 
@@ -116,7 +114,7 @@ const Homepage = () => {
         <div className="min-h-screen pt-20 md:pt-15 lg:pt-20 flex flex-col items-center gap-5 "> 
             
             <div className=" max-w-[170px] mx-auto lg:-translate-x-4 mt-0 md:mt-10 text-neutral-800 opacity-90  font-semibold  backdrop-blur-[1px] flex 
-            justify-center items-center text-[8px] sm:text-sm sm:px-3  px-2 py-2 rounded-full z-100 inset-shadow-aceternity">
+            justify-center items-center text-[8px]  sm:text-sm sm:px-3  px-2 py-2 rounded-full z-100 inset-shadow-aceternity">
                 Fast • Secure • Simple
             </div>
 
