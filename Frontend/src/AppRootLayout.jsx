@@ -22,7 +22,7 @@ const AppRootLayout = () => {
   return (
     <AuthProvider>
       <LenisScroll />
-      <div className='h-screen'>
+      <div className='h-screen selection:bg-neutral-200 selection:text-neutral-950'>
         <Navbar />
         <Outlet />
         <Toaster  />
