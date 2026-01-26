@@ -65,7 +65,7 @@ const Homepage = () => {
      {
     title: "⚡️ Lightning Fast",
     description:
-      "Paste, click, done. Generate short links in seconds from the homepage2 or dashboard..",
+      "Paste, click, done. Generate short links in seconds from the homepage or dashboard..",
   },
   {
     title: "✨ Custom Aliases",
@@ -188,7 +188,7 @@ const Homepage = () => {
     </div>
 
 </div>
-    <div className="  max-w-8xl mx-auto mt-10 md:mt-40 lg:mt-0 flex flex-col items-center gap-5 min-h-screen">
+    <div className="  max-w-7xl mx-auto  flex flex-col items-center gap-5 ">
             <div className="flex flex-col gap-2 items-center">
                 <h1 className=" text-3xl sm:text-6xl font-sans-flex font-bold"> 
                     Features Oorly provides
@@ -200,9 +200,9 @@ const Homepage = () => {
         
         </div>
 
-    <div className="  mt-10 md:mt-40 lg:mt-0 p-2 min-h-screen flex flex-col items-center  gap-10">
+    <div className="  mt-20 md:mt-25 lg:mt-40 p-2  max-w-7xl flex flex-col items-center gap-10">
         <span className="flex flex-col items-center gap-2">
-            <h1 className="text-3xl sm:text-6xl font-bold font-sans-flex tracking-wide">See it in action</h1>
+            <h1 className="text-3xl sm:text-6xl font-bold font-sans-flex ">See it in action</h1>
             <h2 className=" text-sm sm:text-xl tracking-wide font-sans-flex text-neutral-500"> Unlock the power of the oorly dashboard </h2>
         </span>
 
@@ -218,13 +218,13 @@ const Homepage = () => {
 
         </iframe>
     </div>  
-    <footer className="min-h-30 sm:min-h-40 max-w-7xl mx-auto w-full flex flex-col items-center sm:mt-50 gap-5 pb-5 ">
-         <span className="text-sm sm:text-lg tracking-tight font-semibold  text-neutral-500  text-center  "> 
+    <footer className="min-h-30 sm:min-h-40 max-w-7xl mx-auto w-full flex flex-col items-center sm:mt-50 gap-5 pb-5 mt-40 ">
+         <span className="text-sm sm:text-lg text-neutral-500  text-center  "> 
             No credit card required.{" "} 
                 <Link to={"/auth"} className="text-neutral-700  
                 relative after:absolute after:inset-x-0 align-bottom  inline-block after:bottom-0.5 after:bg-black after:-translate-x-50 after:transition-all after:duration-250 
                 transition-all duration-200 after:h-0.5 after:w-full z-10 after:-z-1 hover:after:translate-x-0
-                overflow-hidden sm:text-2xl  text-[16px] 
+                overflow-hidden sm:text-2xl text-[16px] font-semibold tracking-tight
                 "> {" "} Login  </Link> 
             {" "}to use all features for free.
             

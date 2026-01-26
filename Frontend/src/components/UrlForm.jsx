@@ -39,7 +39,7 @@ const UrlForm = ({handleSubmit , focused ,setFocused ,setLoading ,loading , setU
           <button
             type="submit"
             disabled={loading}
-            className="sm:w-[25%] py-4 w-full bg-slate-900 hover:bg-slate-950 disabled:bg-slate-500 text-white sm:text-[16px] text-sm font-semibold 
+            className="sm:w-[25%] mt-3 sm:mt-0 py-4 w-full bg-slate-900 hover:bg-slate-950 disabled:bg-slate-500 text-white sm:text-[16px] text-sm font-semibold 
             sm:py-4 px-6  rounded-xl transition-all duration-300 hover:-translate-y-0.5 active:scale-[0.98] disabled:scale-100 disabled:translate-y-0 
             shadow-lg hover:shadow-xl group relative overflow-hidden after:invisible hover:after:visible after:absolute after:inset-0 
             after:bg-linear-to-r after:from-white/0 after:via-white/20 after:to-white/0 after:-translate-x-50 
