@@ -3,6 +3,7 @@ import { Outlet, useLocation } from '@tanstack/react-router'
 import Navbar from './components/NavBar'
 import { AuthProvider } from './components/AuthProvider'
 import { Toaster } from 'sonner'
+import LenisScroll from './components/LenisScroll'
 
 const AppRootLayout = () => {
 
@@ -20,6 +21,7 @@ const AppRootLayout = () => {
 
   return (
     <AuthProvider>
+      <LenisScroll />
       <div className='h-screen'>
         <Navbar />
         <Outlet />
